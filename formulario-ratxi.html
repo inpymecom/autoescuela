@@ -210,25 +210,36 @@
 <div class="footer">Autoescuela Ratxi · Gestión Interna</div>
 
 <script>
-// ⚠️ Cambia estas URLs por las reales
-const SCRIPT_GET_URL = "https://script.google.com/macros/s/AKfycbwhIfVc6BjQLN0M3arkehfa64nUQND_IgtFGhJjLJHxiuKzxCL9sDkJXw4YiwEIoa306w/exec";
-const SCRIPT_POST_URL = "https://script.google.com/macros/s/AKfycbwhIfVc6BjQLN0M3arkehfa64nUQND_IgtFGhJjLJHxiuKzxCL9sDkJXw4YiwEIoa306w/exec";
+// ⚠️ CAMBIA ESTA URL POR LA REAL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxinNaV13oRBZdnboNYBYAuKtZPgKmjSIJ_uGtCuZ3E7IOopL4jOKmu57cw88ZVgzw-1Q/exec";
 
 let alumnosData = [];
 
-// Cargar alumnos al iniciar
-fetch(SCRIPT_GET_URL)
-  .then(r => r.json())
-  .then(data => {
+// Función para cargar alumnos usando JSONP (no necesita CORS)
+function cargarAlumnosJSONP() {
+  const callbackName = 'cargarAlumnosCallback_' + Date.now();
+  const script = document.createElement('script');
+  script.src = SCRIPT_URL + '?callback=' + callbackName;
+  
+  window[callbackName] = function(data) {
     alumnosData = data.alumnos || [];
     const select = document.getElementById('alumno');
+    select.innerHTML = '<option value="">Selecciona un alumno</option>';
     alumnosData.forEach(a => {
       const opt = document.createElement('option');
       opt.value = a.id;
       opt.textContent = a.nombre;
       select.appendChild(opt);
     });
-  });
+    delete window[callbackName];
+    document.head.removeChild(script);
+  };
+  
+  document.head.appendChild(script);
+}
+
+// Cargar los alumnos en cuanto arranque la página
+window.addEventListener('DOMContentLoaded', cargarAlumnosJSONP);
 
 // Al seleccionar alumno, mostrar sus datos
 document.getElementById('alumno').addEventListener('change', function() {
@@ -289,7 +300,7 @@ document.getElementById('claseForm').addEventListener('submit', async function(e
   };
   
   try {
-    await fetch(SCRIPT_POST_URL, {
+    await fetch(SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
