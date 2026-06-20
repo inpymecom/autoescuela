@@ -222,7 +222,7 @@
 
 <script>
 // ⚠️ CAMBIA ESTA URL POR LA REAL
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzgmqvwZ-1fouK994lB1uucr6LVsbZR3VA8VitU6irE3vgF2QZP_36p7XljesLxwbg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynTw4YeJNz7cJ21O7BZ6Lg3ohL4oVYRc9AZMByNpjD19EpTYZBg50jyXQb1_683Xs/exec";
 
 let alumnosData = [];
 
@@ -272,7 +272,7 @@ function actualizarHoras() {
   const fecha = document.getElementById('fecha').value;
   const selectHora = document.getElementById('hora');
   
-  selectHora.innerHTML = '<option value="">Selecciona una hora</option>';
+  selectHora.innerHTML = '<option value="">Primero selecciona alumno y luego el día</option>';
   
   if (!idAlumno || !fecha) return;
   
