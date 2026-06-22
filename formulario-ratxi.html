@@ -312,13 +312,13 @@ document.getElementById('claseForm').addEventListener('submit', async function(e
   
   const alumno = alumnosData.find(a => a.id === document.getElementById('alumno').value);
   
-  const datos = {
+    const datos = {
     nombre: alumno ? alumno.nombre : '',
     telefono: alumno ? alumno.telefono : '',
     email: alumno ? alumno.email : '',
     fecha: document.getElementById('fecha').value,
     hora: document.getElementById('hora').value,
-    duracion: "60",
+    duracion: document.getElementById('duracion').value, // <-- ¡Cambiado!
     tipo: "Práctica",
     observaciones: document.getElementById('observaciones').value.trim()
   };
