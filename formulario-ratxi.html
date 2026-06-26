@@ -268,7 +268,9 @@ document.getElementById('alumno').addEventListener('change', function() {
   const id = this.value;
   const alumno = alumnosData.find(a => a.id === id);
   
-  document.getElementById('infoTelefono').textContent = alumno ? alumno.telefono : '-';
+// Limpia el teléfono visualmente para mostrarlo sin espacios
+  const telefonoMostrado = alumno ? alumno.telefono.replace(/\D/g, '') : '-';
+  document.getElementById('infoTelefono').textContent = telefonoMostrado;
   document.getElementById('infoEmail').textContent = alumno ? alumno.email : '-';
   
   actualizarHoras();
